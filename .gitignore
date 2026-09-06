@@ -1,0 +1,37 @@
+# Visual Studio / .NET
+.vs/
+.vscode/
+**/[Bb]in/
+**/[Oo]bj/
+**/[Aa]rtifacts/
+publish/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build, package, and test outputs
+*.zip
+*.nupkg
+TestResults/
+coverage/
+*.trx
+
+# Runtime and local data
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+logs/
+*.log
+
+# Local source materials and generated references
+docs/*.xlsx
+docs/gemini-code-*.html
+docs/企鹅.png
+ui-verification.png
+
+# OS metadata
+.DS_Store
+Thumbs.db

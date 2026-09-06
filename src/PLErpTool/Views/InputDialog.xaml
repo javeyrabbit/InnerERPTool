@@ -1,0 +1,116 @@
+<ui:FluentWindow x:Class="PLErpTool.Views.InputDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+        Title="登记" Width="560" SizeToContent="Height" WindowStartupLocation="CenterOwner"
+        FontFamily="{StaticResource AppFont}" ResizeMode="NoResize" ShowInTaskbar="False"
+        Background="White"
+        MaxHeight="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Height}"
+        WindowBackdropType="None">
+    <ScrollViewer Margin="25"
+                  HorizontalScrollBarVisibility="Disabled"
+                  VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+        <Border BorderBrush="{StaticResource PrimaryBrush}" BorderThickness="0,0,0,2"
+                HorizontalAlignment="Left" Margin="0,0,0,20">
+            <TextBlock x:Name="TitleText" FontSize="16" FontWeight="Bold" Foreground="#333"
+                       Padding="0,0,0,5"/>
+        </Border>
+        <Border x:Name="SummaryPanel"
+                Margin="0,0,0,18"
+                Padding="12,10"
+                Background="#F8F9FA"
+                BorderBrush="{StaticResource BorderBrush}"
+                BorderThickness="1"
+                CornerRadius="4"
+                Visibility="Collapsed">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Margin="0,0,8,8" Foreground="#777" Text="公司" />
+                <TextBlock x:Name="SummaryCompanyText" Grid.Row="0" Grid.Column="1" Margin="0,0,18,8"
+                           FontWeight="SemiBold" Foreground="#333" TextWrapping="Wrap" />
+                <TextBlock Grid.Row="0" Grid.Column="2" Margin="0,0,8,8" Foreground="#777" Text="业务员" />
+                <TextBlock x:Name="SummarySalesmanText" Grid.Row="0" Grid.Column="3" Margin="0,0,0,8"
+                           FontWeight="SemiBold" Foreground="#333" TextWrapping="Wrap" />
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Margin="0,0,8,8" Foreground="#777" Text="月份" />
+                <TextBlock x:Name="SummaryMonthText" Grid.Row="1" Grid.Column="1" Margin="0,0,18,8"
+                           FontWeight="SemiBold" Foreground="#333" />
+                <TextBlock Grid.Row="1" Grid.Column="2" Margin="0,0,8,8" Foreground="#777" Text="当前欠款" />
+                <TextBlock x:Name="SummaryDebtText" Grid.Row="1" Grid.Column="3" Margin="0,0,0,8"
+                           FontWeight="SemiBold" Foreground="#333" TextAlignment="Right" />
+
+                <TextBlock Grid.Row="2" Grid.Column="2" Margin="0,0,8,0" Foreground="#777" Text="差额" />
+                <TextBlock x:Name="SummaryBalanceText" Grid.Row="2" Grid.Column="3"
+                           FontWeight="Bold" TextAlignment="Right" />
+            </Grid>
+        </Border>
+        <StackPanel x:Name="CustomerSalesmanPanel" Margin="0,0,0,15" Visibility="Collapsed">
+            <TextBlock Text="客户" FontSize="13" Foreground="#666" Margin="0,0,0,5" />
+            <ComboBox x:Name="CustomerSelector"
+                      Height="32"
+                      DisplayMemberPath="Name"
+                      Padding="8,0"
+                      HorizontalContentAlignment="Stretch"
+                      VerticalContentAlignment="Center"
+                      MaxDropDownHeight="280"
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                      SelectionChanged="OnCustomerSelectionChanged" />
+            <TextBlock Text="业务员" FontSize="13" Foreground="#666" Margin="0,12,0,5" />
+            <ComboBox x:Name="SalesmanSelector"
+                      Height="32"
+                      DisplayMemberPath="Name"
+                      Padding="8,0"
+                      HorizontalContentAlignment="Stretch"
+                      VerticalContentAlignment="Center"
+                      MaxDropDownHeight="280"
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled" />
+        </StackPanel>
+        <TextBlock x:Name="MonthLabel" Text="所属月份" FontSize="13" Foreground="#666" Margin="0,0,0,5"/>
+        <Grid x:Name="MonthPickerPanel" Margin="0,0,0,15">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <ComboBox x:Name="YearInput" Grid.Column="0" Height="32" Padding="8,4"
+                      HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <ComboBox x:Name="MonthSelector" Grid.Column="2" Height="32" Padding="8,4"
+                      HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        </Grid>
+        <ui:TextBox x:Name="MonthInput" Visibility="Collapsed" Padding="9,6" FontSize="13"
+                 Margin="0,0,0,15" Background="#F9F9F9" Foreground="#666"/>
+        <TextBlock x:Name="AmountLabel" Text="金额 (元)" FontSize="13" Foreground="#666" Margin="0,0,0,5"/>
+        <ui:TextBox x:Name="AmountInput" Padding="9,6" FontSize="13" Margin="0,0,0,15"/>
+        <StackPanel x:Name="DebtTypePanel" Margin="0,0,0,15" Visibility="Collapsed">
+            <TextBlock Text="欠款类型" FontSize="13" Foreground="#666" Margin="0,0,0,5" />
+            <ComboBox x:Name="DebtTypeSelector"
+                      Height="32"
+                      Padding="8,0"
+                      HorizontalContentAlignment="Stretch"
+                      VerticalContentAlignment="Center"
+                      FlowDirection="LeftToRight"
+                      MaxDropDownHeight="160"
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled" />
+        </StackPanel>
+        <TextBlock x:Name="RemarkLabel" Text="备注信息" FontSize="13" Foreground="#666" Margin="0,0,0,5"/>
+        <ui:TextBox x:Name="RemarkInput" Padding="9,6" FontSize="13" Margin="0,0,0,20"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <ui:Button x:Name="CancelBtn" Appearance="Secondary" Content="取消" Click="OnCancel" Width="76" Height="34"
+                       Margin="0,0,10,0"/>
+            <ui:Button x:Name="ConfirmBtn" Appearance="Primary" Content="确定" Click="OnConfirm" Width="76" Height="34"/>
+        </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</ui:FluentWindow>

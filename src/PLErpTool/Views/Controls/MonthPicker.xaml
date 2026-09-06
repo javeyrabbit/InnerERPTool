@@ -1,0 +1,63 @@
+<UserControl x:Class="PLErpTool.Views.Controls.MonthPicker"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             Width="132"
+             Height="32">
+    <Grid Background="White">
+        <ToggleButton x:Name="PickerToggle"
+                      Background="White"
+                      BorderBrush="#DDDDDD"
+                      BorderThickness="1"
+                      Click="OnToggleClicked">
+            <Grid>
+                <TextBlock Margin="12,0,34,0"
+                           VerticalAlignment="Center"
+                           Text="{Binding SelectedDate, RelativeSource={RelativeSource AncestorType=UserControl}, StringFormat={}{0:yyyy年MM月}}" />
+                <ui:SymbolIcon Margin="0,0,10,0"
+                               HorizontalAlignment="Right"
+                               VerticalAlignment="Center"
+                               FontSize="16"
+                               Symbol="CalendarMonth24" />
+            </Grid>
+        </ToggleButton>
+        <Popup x:Name="MonthPopup"
+               AllowsTransparency="True"
+               Closed="OnPopupClosed"
+               Placement="Bottom"
+               PlacementTarget="{Binding ElementName=PickerToggle}"
+               StaysOpen="False">
+            <Border Width="{Binding ActualWidth, ElementName=PickerToggle}"
+                    Margin="0,4,0,0"
+                    Padding="6"
+                    Background="White"
+                    BorderBrush="#D8D5F6"
+                    BorderThickness="1"
+                    CornerRadius="6">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="6" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <ComboBox x:Name="YearCombo"
+                              Grid.Column="0"
+                              Height="28"
+                              Padding="6,0"
+                              HorizontalContentAlignment="Stretch"
+                              VerticalContentAlignment="Center"
+                              FlowDirection="LeftToRight"
+                              SelectionChanged="OnSelectionChanged" />
+                    <ComboBox x:Name="MonthCombo"
+                              Grid.Column="2"
+                              Height="28"
+                              Padding="6,0"
+                              HorizontalContentAlignment="Stretch"
+                              VerticalContentAlignment="Center"
+                              FlowDirection="LeftToRight"
+                              SelectionChanged="OnSelectionChanged" />
+                </Grid>
+            </Border>
+        </Popup>
+    </Grid>
+</UserControl>

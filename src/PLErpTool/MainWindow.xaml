@@ -1,0 +1,158 @@
+<ui:FluentWindow x:Class="PLErpTool.MainWindow"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+                 Title="ERP管理小工具"
+                 Width="1300"
+                 Height="700"
+                 MinWidth="980"
+                 MinHeight="620"
+                 FontFamily="{StaticResource AppFont}"
+                 WindowStartupLocation="CenterScreen"
+                 Background="White"
+                 WindowBackdropType="None"
+                 ExtendsContentIntoTitleBar="True">
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Name="NavigationColumn" Width="230" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <ui:TitleBar Grid.ColumnSpan="2"
+                     Title="ERP管理小工具"
+                     Background="{StaticResource MenuBgBrush}"
+                     Foreground="White"
+                     ButtonsBackground="#3B3970"
+                     ButtonsForeground="White"
+                     ShowMinimize="True"
+                     ShowMaximize="True"
+                     ShowClose="True" />
+
+        <Border Grid.Row="1"
+                Grid.Column="0"
+                Background="{StaticResource MenuBgBrush}">
+            <Border.Resources>
+                <Style x:Key="NavigationToggleButtonStyle" TargetType="Button">
+                    <Setter Property="Width" Value="52" />
+                    <Setter Property="Height" Value="48" />
+                    <Setter Property="Margin" Value="12,0,0,10" />
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="BorderThickness" Value="0" />
+                    <Setter Property="Cursor" Value="Hand" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border x:Name="ToggleBorder"
+                                        Background="{TemplateBinding Background}"
+                                        CornerRadius="6">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="ToggleBorder" Property="Background" Value="#3D3A73" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+                <Style x:Key="PrimaryNavigationButtonStyle" TargetType="Button">
+                    <Setter Property="Height" Value="46" />
+                    <Setter Property="Margin" Value="14,0,14,8" />
+                    <Setter Property="Padding" Value="12,0" />
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="BorderThickness" Value="0" />
+                    <Setter Property="Foreground" Value="#C8C4DE" />
+                    <Setter Property="FontSize" Value="15" />
+                    <Setter Property="FontWeight" Value="SemiBold" />
+                    <Setter Property="HorizontalContentAlignment" Value="Left" />
+                    <Setter Property="Cursor" Value="Hand" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border x:Name="ButtonBorder"
+                                        Padding="{TemplateBinding Padding}"
+                                        Background="{TemplateBinding Background}"
+                                        CornerRadius="6">
+                                    <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                      VerticalAlignment="Center" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="ButtonBorder" Property="Background" Value="#3D3A73" />
+                                        <Setter Property="Foreground" Value="White" />
+                                    </Trigger>
+                                    <Trigger Property="Tag" Value="Active">
+                                        <Setter TargetName="ButtonBorder" Property="Background" Value="#5B46D7" />
+                                        <Setter Property="Foreground" Value="White" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Border.Resources>
+            <StackPanel Margin="0,8,0,0">
+                <Button x:Name="CollapseNavigationButton"
+                        Click="OnToggleNavigation"
+                        Style="{StaticResource NavigationToggleButtonStyle}">
+                    <Viewbox Width="20" Height="20">
+                        <Path Data="M3,6 L21,6 M3,12 L21,12 M3,18 L21,18"
+                              Stroke="#C8C4DE"
+                              StrokeEndLineCap="Round"
+                              StrokeThickness="1.8" />
+                    </Viewbox>
+                </Button>
+                <Button x:Name="ReceivableNavigationButton"
+                        Command="{Binding SwitchToReceivableCommand}"
+                        Style="{StaticResource PrimaryNavigationButtonStyle}"
+                        Tag="{Binding ReceivableMenuTag}">
+                    <StackPanel Orientation="Horizontal">
+                        <Viewbox x:Name="ReceivableNavigationIcon" Width="20" Height="20" Margin="0,0,14,0">
+                            <Path Data="{StaticResource DocumentIcon}"
+                                  Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
+                                  StrokeLineJoin="Round"
+                                  StrokeThickness="1.8" />
+                        </Viewbox>
+                        <TextBlock x:Name="ReceivableNavigationText" VerticalAlignment="Center" Text="应收管理" />
+                    </StackPanel>
+                </Button>
+                <Button x:Name="AccountNavigationButton"
+                        Command="{Binding SwitchToAccountCommand}"
+                        Style="{StaticResource PrimaryNavigationButtonStyle}"
+                        Tag="{Binding AccountMenuTag}">
+                    <StackPanel Orientation="Horizontal">
+                        <Viewbox x:Name="AccountNavigationIcon" Width="20" Height="20" Margin="0,0,14,0">
+                            <Path Data="{StaticResource DatabaseIcon}"
+                                  Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
+                                  StrokeLineJoin="Round"
+                                  StrokeThickness="1.8" />
+                        </Viewbox>
+                        <TextBlock x:Name="AccountNavigationText" VerticalAlignment="Center" Text="账套管理" />
+                    </StackPanel>
+                </Button>
+                <Button x:Name="PersonnelNavigationButton"
+                        Command="{Binding SwitchToPersonnelCommand}"
+                        Style="{StaticResource PrimaryNavigationButtonStyle}"
+                        Tag="{Binding PersonnelMenuTag}">
+                    <StackPanel Orientation="Horizontal">
+                        <Viewbox x:Name="PersonnelNavigationIcon" Width="20" Height="20" Margin="0,0,14,0">
+                            <Path Data="M12,12A4,4 0 1,0 12,4A4,4 0 0,0 12,12M4,21C4,17.7 7.6,15 12,15C16.4,15 20,17.7 20,21"
+                                  Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
+                                  StrokeEndLineCap="Round"
+                                  StrokeLineJoin="Round"
+                                  StrokeThickness="1.8" />
+                        </Viewbox>
+                        <TextBlock x:Name="PersonnelNavigationText" VerticalAlignment="Center" Text="人员信息维护" />
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Border>
+
+        <ContentControl Grid.Row="1" Grid.Column="1" Background="White" Content="{Binding CurrentView}" />
+    </Grid>
+</ui:FluentWindow>
